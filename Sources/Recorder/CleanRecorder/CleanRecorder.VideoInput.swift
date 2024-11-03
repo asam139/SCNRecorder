@@ -29,9 +29,9 @@ import SceneKit
 
 extension CleanRecorder {
 
-  final class VideoInput<T: CleanRecordable>: MediaSessionInput_PixelBufferVideo, TimeScalable {
+  final class VideoInput<U: CleanRecordable>: MediaSessionInput_PixelBufferVideo, TimeScalable {
 
-    weak var cleanRecordable: T?
+    weak var cleanRecordable: U?
 
     let timeScale: CMTimeScale
 
@@ -60,7 +60,7 @@ extension CleanRecorder {
 
     @UnfairAtomic var started: Bool = false
 
-    init(cleanRecordable: T, timeScale: CMTimeScale, queue: DispatchQueue) {
+    init(cleanRecordable: U, timeScale: CMTimeScale, queue: DispatchQueue) {
       self.cleanRecordable = cleanRecordable
       self.timeScale = timeScale
       self.queue = queue
