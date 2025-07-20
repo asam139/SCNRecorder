@@ -27,30 +27,41 @@ import Foundation
 import AVFoundation
 
 public struct AudioSettings {
+    public enum Constants {
+        public static let defaultFormat = kAudioFormatMPEG4AAC
+        public static let defaultSampleRate = 44100.0
+        public static let defaultNumberOfChannels = 1
+    }
 
-  static let defaultSampleRate = 44100.0
+    public let format: AudioFormatID
+    public let sampleRate: Double
+    public let numberOfChannels: Int
 
-  static let defaultNumberOfChannels = 1
-
-  public var format = kAudioFormatMPEG4AAC
-
-  public var sampleRate = defaultSampleRate
-
-  public var numberOfChannels = defaultNumberOfChannels
+    public init(
+        format: AudioFormatID = Constants.defaultFormat,
+        sampleRate: Double = Constants.defaultSampleRate,
+        numberOfChannels: Int = Constants.defaultNumberOfChannels
+    ) {
+        self.format = format
+        self.sampleRate = sampleRate
+        self.numberOfChannels = numberOfChannels
+    }
 }
 
 extension AudioSettings {
 
-  init(audioFormat: AVAudioFormat) {
-    sampleRate = audioFormat.sampleRate
-    numberOfChannels = Int(audioFormat.channelCount)
-  }
+    init(audioFormat: AVAudioFormat) {
+        self.init(
+            sampleRate: audioFormat.sampleRate,
+            numberOfChannels: Int(audioFormat.channelCount)
+        )
+    }
 
-  var outputSettings: [String: Any] {
-    [
-      AVFormatIDKey: format,
-      AVSampleRateKey: sampleRate,
-      AVNumberOfChannelsKey: numberOfChannels
-    ]
-  }
+    var outputSettings: [String: Any] {
+        [
+            AVFormatIDKey: format,
+            AVSampleRateKey: sampleRate,
+            AVNumberOfChannelsKey: numberOfChannels
+        ]
+    }
 }
